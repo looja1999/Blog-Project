@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Please, login : </h2>
+            <h4>MUST BE A SUPERUSER, ELSE PLEASE CHECK WITH THE ADMIN</h4>
+            
+        {% if form.errors %}
+            <p>Username or password did not match</p>
+        {% endif %}
+        <br>
+        <div class="container form-group">
+            <form method="POST">
+                <label for="username" >Username : </label> 
+                <input type="text" class="form-control" name="username" id="">
+                <br>
+                <label for="password">Password : </label> 
+                <input type="password" class="form-control" name="password" id="">
+                {% csrf_token %}
+                <br>
+                <input type="submit" value="Login" class="btn btn-primary" name="" id="">
+                <input type="hidden" name="next" value="{{ next }}">
+            </form> 
+        </div>
+        
+    </div>
+{% endblock %}

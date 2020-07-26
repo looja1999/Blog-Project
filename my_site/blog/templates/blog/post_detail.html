@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>{{post.title}}</h1>
+            {% if post.published_date %}
+                <p> {{post.published_date}} </p>
+            {% else %}
+                <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-info"> PUBLISH </a>
+            {% endif %}
+
+            <hr>
+                {{post.text}}
+                <hr>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-secondary"> Edit </a>
+                    <a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-danger"> Remove </a>
+                {% endif %}
+
+                <hr>
+            <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-primary">Add Comment</a>
+            </p>
+            <hr>
+            <h5>Comments</h5>
+            <div class="">  
+                {% for comment in post.comments.all %}
+                    <br>
+                    {% if user.is_authenticated or comment.approved_comment %}
+                        {{comment.created_date}}
+                        {% if not comment.approved_comment %}
+                            <a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-danger"> Comment Remove </a>
+                            <a href="{% url 'comment_approve' pk=comment.pk %}" class="btn btn-primary"> Comment Approve </a>
+                        {% endif %}
+                        <hr>
+                        <h5>{{comment.text}} </h5>  
+                        <p> by Looja </p>
+                       
+                    {% endif %}
+                    {% empty %}
+                    <p>no comments</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

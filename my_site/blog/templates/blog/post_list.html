@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>My Blogs</h1>
+            {% for post in post_list %}
+                <hr>
+                <h3><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h3>
+                <p>{{post.published_date|date:"d-M-Y"}}</p>
+                <p><a href="{% url 'post_detail' pk=post.pk %}"> Comment Count : {{post.approve_comments.count }} </a></p>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
